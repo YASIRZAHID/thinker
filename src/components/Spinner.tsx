@@ -1,36 +1,34 @@
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { theme } from '../theme';
+import React from 'react';
+import styles from './Spinner.module.css';
 
-const fadeIn = keyframes`
-    from { opacity: 0; }
-    to { opacity: 1; }
-`;
+interface SpinnerProps {
+    variant?: 'primary' | 'secondary' | 'tertiary';
+    size?: 'small' | 'medium' | 'large';
+    disabled?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+    onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+}
 
-const StyledSpinner = styled(motion.div)`
-    padding: ${theme.spacing.medium};
-    border-radius: ${theme.borderRadius};
-    background: ${theme.colors.background};
-    box-shadow: ${theme.shadows.medium};
-    transition: all 0.3s ease;
-    animation: ${fadeIn} 0.3s ease-in;
+export const Spinner: React.FC<SpinnerProps> = ({ 
+    variant = 'primary',
+    size = 'medium',
+    disabled = false,
+    className,
+    children,
+    onClick 
+}) => {
+    const baseClass = styles.container;
+    const variantClass = styles[variant];
+    const sizeClass = styles[size];
     
-    &:hover {
-        transform: translateY(-2px);
-        box-shadow: ${theme.shadows.large};
-    }
-`;
-
-export const Spinner = () => {
     return (
-        <StyledSpinner
-            initial={ opacity: 0 }
-            animate={ opacity: 1 }
-            exit={ opacity: 0 }
+        <div 
+            className={`${baseClass} ${variantClass} ${sizeClass} ${className}`}
+            onClick={disabled ? undefined : onClick}
+            aria-disabled={disabled}
         >
-            <div className="content">
-                {component} Content Here
-            </div>
-        </StyledSpinner>
+            {children}
+        </div>
     );
 };
