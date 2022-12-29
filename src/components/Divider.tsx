@@ -18,7 +18,7 @@ export const Divider: React.FC<DividerProps> = ({
     children,
     onClick 
 }) => {
-    const baseClass = styles.container;
+    const baseClass = styles.styledContainer;
     const variantClass = styles[variant];
     const sizeClass = styles[size];
     
